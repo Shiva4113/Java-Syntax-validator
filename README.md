@@ -1,6 +1,6 @@
 Java syntax validator using PLY tools (python)
 
-#Requirements:
+**Requirements:**
   python lex/yacc tools - PLY
   -> pip install ply
 
