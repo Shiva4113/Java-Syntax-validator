@@ -12,7 +12,7 @@ tokens = ('DTYPE','ID','COMMA','EQUALS','NUMBER','CHAR',"STRING",'SEMICOLON')
 #rule for identifiers
 #keep everything in order ==> Data type -> ID -> Equals -> Number -> Semicolon
 def t_DTYPE(t): 
-    r'\b(int|char|double|String|boolean)\b'
+    r'\b(int|char|double|String|boolean|float|long|short)\b'
     return t
 
 def t_ID(t):
@@ -49,7 +49,7 @@ def t_SEMICOLON(t):
 t_ignore = ' \t' #to ignore all the spaces and tabs in the regex
 
 def t_error(t):
-    print("Illegal character encountered")
+    print(f"Illegal character encountered {t.value[0]}")
     t.lexer.skip(1)
 
 
@@ -60,7 +60,7 @@ data = input()
 lexer.input(data)
 
 while(1):
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+     tok = lexer.token()
+     if not tok:
+         break
+     print(tok)
