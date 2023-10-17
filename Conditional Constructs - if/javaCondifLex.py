@@ -1,9 +1,13 @@
 import ply.lex as lex
 
-tokens = ('IF','LBRACE','LESSER','GREATER','EQUALS','NOT','RBRACE','LFLOWER','SEMICOLON','RFLOWER','ID')
+tokens = ('IF','ELSE','LBRACE','LESSER','GREATER','EQUALS','NOT','AND','OR','RBRACE','LFLOWER','SEMICOLON','RFLOWER','ID')
 
 def t_IF(t):
     r'if'
+    return t
+
+def t_ELSE(t):
+    r'else'
     return t
 
 t_LBRACE = r'\('
@@ -18,10 +22,12 @@ def t_ID(t):
 t_LESSER = r'<'
 t_GREATER = r'>'
 t_EQUALS = r'==|='
-t_NOT = r'  !'
+t_NOT = r'!'
+t_AND = r'&&'
+t_OR = r'\|\|'
 t_SEMICOLON = r';'
 
-t_ignore = ' \t'
+t_ignore = ' \t\n'
 
 def t_error(t):
     print(f"Illegal character found '{t.value[0]}'")

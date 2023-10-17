@@ -4,6 +4,7 @@ import ply.yacc as yacc
 from javaVarDecLex import tokens
 
 flag = 0
+
 def p_declaration(p):
     '''
     declaration : DTYPE list SEMICOLON     
@@ -25,7 +26,8 @@ def p_error(p):
     global flag 
     flag = 1
 
-
+#From here, just copy paste and change the input statement for every other construct
+#Don't forget to globally declare flag and also make flag 1 at error 
 parser = yacc.yacc()
 while True:
    flag = 0
