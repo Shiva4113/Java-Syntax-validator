@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CHAR COMMA DTYPE EQUALS ID NUMBER SEMICOLON STRING\n    declaration : DTYPE list SEMICOLON\n    list        : ID COMMA list\n                | ID      \n    '
+_lr_signature = 'CHAR COMMA DTYPE EQUALS ID NUMBER SEMICOLON STRING\n    declaration : DTYPE list SEMICOLON     \n    \n     list : ID COMMA list \n          | ID\n     '
     
 _lr_action_items = {'DTYPE':([0,],[2,]),'$end':([1,5,],[0,-1,]),'ID':([2,6,],[4,4,]),'SEMICOLON':([3,4,7,],[5,-3,-2,]),'COMMA':([4,],[6,]),}
 
@@ -27,7 +27,7 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> declaration","S'",1,None,None,None),
-  ('declaration -> DTYPE list SEMICOLON','declaration',3,'p_declaration','javaVarDecParse.py',8),
-  ('list -> ID COMMA list','list',3,'p_declaration','javaVarDecParse.py',9),
-  ('list -> ID','list',1,'p_declaration','javaVarDecParse.py',10),
+  ('declaration -> DTYPE list SEMICOLON','declaration',3,'p_declaration','javaVarDecParse.py',9),
+  ('list -> ID COMMA list','list',3,'p_list','javaVarDecParse.py',15),
+  ('list -> ID','list',1,'p_list','javaVarDecParse.py',16),
 ]

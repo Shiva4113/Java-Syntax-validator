@@ -18,7 +18,7 @@ def t_ID(t):
 t_LESSER = r'<'
 t_GREATER = r'>'
 t_EQUALS = r'==|='
-t_NOT = r'!'
+t_NOT = r'  !'
 t_SEMICOLON = r';'
 
 t_ignore = ' \t'

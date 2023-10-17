@@ -2,6 +2,9 @@ import ply.yacc as yacc
 #importing tokens
 from javaCondifLex import tokens
 from javaCondifLex import data
+
+flag = 0
+
 def p_if(p):
     '''
     if_statement : IF LB condition RB LF statements RF
@@ -10,15 +13,19 @@ def p_if(p):
 
 def p_statements(p):
     '''
-    statements : ID | empty
+    statements : statements statement
+               | empty
     '''
     if len(p) == 2:
-        p[0] = p[1]
-    else:
         p[0] = []
+    else:
+        p[0] = p[1] + [p[2]]
 
-
-    p[0] = p[1] #statements = ID
+def p_statement(p):
+    '''
+    statement : ID SEMICOLON
+    '''
+    p[0] = ('statement', p[1])
 
 def p_conditions(p):
     '''
@@ -27,12 +34,10 @@ def p_conditions(p):
     p[0] = p[1] #conditions = ID
 
 def p_empty(p):
-    '''empty:'''
+    'empty:'
     pass
+    
 def p_error(p):
     print("Syntax error")
     
-
 parser = yacc.yacc()
-result = parser.parse(data)
-print(result)
