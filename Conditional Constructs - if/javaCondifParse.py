@@ -7,37 +7,84 @@ flag = 0
 
 def p_if(p):
     '''
-    if_statement : IF LB condition RB LF statements RF
+    if_statement    : IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
+                    | IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
+                    | ELSE statements
     '''
-    p[0] = ('if',p[3],p[6])#p[0] = if_statement, p[3] = condition, p[6] = statements
+    p[0] = (p[1],p[3],p[6])#p[0] = if_statement, p[3] = condition, p[6] = statements
 
 def p_statements(p):
     '''
     statements : statements statement
-               | empty
+               | statement
     '''
     if len(p) == 2:
-        p[0] = []
+        p[0] = ['statements',[p[1]]]
     else:
-        p[0] = p[1] + [p[2]]
+        p[0] = ['statements',p[1] + [p[2]]]
 
 def p_statement(p):
     '''
-    statement : ID SEMICOLON
+    statement : list SEMICOLON
+             | if_statement
+             | empty
     '''
-    p[0] = ('statement', p[1])
+    p[0] = p[1]
+
+def p_list(p):
+    '''
+    list : ID list 
+         | ID
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]] + p[2]
+
+def p_empty(p):
+    '''
+    empty :
+    '''
+    p[0] = None
+
 
 def p_conditions(p):
     '''
-    conditions : ID
+    conditions  : ID EQUALS ID 
+                | ID GREATER ID 
+                | ID LESSER ID 
+                | ID GREATER EQUALS ID 
+                | ID LESSER EQUALS ID 
+                | ID NOT EQUALS ID
+                | conditions AND conditions 
+                | conditions OR conditions
+                | ID
     '''
-    p[0] = p[1] #conditions = ID
-
-def p_empty(p):
-    'empty:'
-    pass
+    if len(p) == 2:
+        p[0] = ('condition',p[1]) #conditions = ID
+    elif len(p) == 4:
+        p[0] = ('condition',p[1]+""+p[2]+""+p[3])
+    else:
+        pass
     
 def p_error(p):
     print("Syntax error")
-    
+    global flag
+    flag = 1
+
+
+#From here, just copy paste and change the input statement for every other construct
+#Don't forget to globally declare flag and also make flag 1 at error 
 parser = yacc.yacc()
+while True:
+   flag = 0
+   try:
+       s = input('enter the conditional statement:')
+   except EOFError:
+       break
+   if not s: 
+            flag = 0
+            continue
+   result = parser.parse(s)
+   if flag == 0:
+        print("Result:", result)
