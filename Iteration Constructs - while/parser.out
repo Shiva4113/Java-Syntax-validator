@@ -1,0 +1,531 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> while_statement
+Rule 1     while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER
+Rule 2     while_statement -> WHILE LBRACE conditions RBRACE singleStatement
+Rule 3     statements -> statements statement
+Rule 4     statements -> statement
+Rule 5     statement -> list SEMICOLON
+Rule 6     statement -> while_statement
+Rule 7     statement -> empty
+Rule 8     singleStatement -> list SEMICOLON
+Rule 9     singleStatement -> empty
+Rule 10    singleStatement -> while_statement
+Rule 11    list -> ID list
+Rule 12    list -> ID
+Rule 13    empty -> <empty>
+Rule 14    conditions -> ID EQUALS ID
+Rule 15    conditions -> ID GREATER ID
+Rule 16    conditions -> ID LESSER ID
+Rule 17    conditions -> ID GREATER EQUALS ID
+Rule 18    conditions -> ID LESSER EQUALS ID
+Rule 19    conditions -> ID NOT EQUALS ID
+Rule 20    conditions -> conditions AND conditions
+Rule 21    conditions -> conditions OR conditions
+Rule 22    conditions -> ID
+
+Terminals, with rules where they appear
+
+AND                  : 20
+EQUALS               : 14 17 18 19
+GREATER              : 15 17
+ID                   : 11 12 14 14 15 15 16 16 17 17 18 18 19 19 22
+LBRACE               : 1 2
+LESSER               : 16 18
+LFLOWER              : 1
+NOT                  : 19
+OR                   : 21
+RBRACE               : 1 2
+RFLOWER              : 1
+SEMICOLON            : 5 8
+WHILE                : 1 2
+error                : 
+
+Nonterminals, with rules where they appear
+
+conditions           : 1 2 20 20 21 21
+empty                : 7 9
+list                 : 5 8 11
+singleStatement      : 2
+statement            : 3 4
+statements           : 1 3
+while_statement      : 6 10 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . while_statement
+    (1) while_statement -> . WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> . WHILE LBRACE conditions RBRACE singleStatement
+
+    WHILE           shift and go to state 2
+
+    while_statement                shift and go to state 1
+
+state 1
+
+    (0) S' -> while_statement .
+
+
+
+state 2
+
+    (1) while_statement -> WHILE . LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> WHILE . LBRACE conditions RBRACE singleStatement
+
+    LBRACE          shift and go to state 3
+
+
+state 3
+
+    (1) while_statement -> WHILE LBRACE . conditions RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> WHILE LBRACE . conditions RBRACE singleStatement
+    (14) conditions -> . ID EQUALS ID
+    (15) conditions -> . ID GREATER ID
+    (16) conditions -> . ID LESSER ID
+    (17) conditions -> . ID GREATER EQUALS ID
+    (18) conditions -> . ID LESSER EQUALS ID
+    (19) conditions -> . ID NOT EQUALS ID
+    (20) conditions -> . conditions AND conditions
+    (21) conditions -> . conditions OR conditions
+    (22) conditions -> . ID
+
+    ID              shift and go to state 5
+
+    conditions                     shift and go to state 4
+
+state 4
+
+    (1) while_statement -> WHILE LBRACE conditions . RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> WHILE LBRACE conditions . RBRACE singleStatement
+    (20) conditions -> conditions . AND conditions
+    (21) conditions -> conditions . OR conditions
+
+    RBRACE          shift and go to state 6
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+
+state 5
+
+    (14) conditions -> ID . EQUALS ID
+    (15) conditions -> ID . GREATER ID
+    (16) conditions -> ID . LESSER ID
+    (17) conditions -> ID . GREATER EQUALS ID
+    (18) conditions -> ID . LESSER EQUALS ID
+    (19) conditions -> ID . NOT EQUALS ID
+    (22) conditions -> ID .
+
+    EQUALS          shift and go to state 9
+    GREATER         shift and go to state 10
+    LESSER          shift and go to state 11
+    NOT             shift and go to state 12
+    RBRACE          reduce using rule 22 (conditions -> ID .)
+    AND             reduce using rule 22 (conditions -> ID .)
+    OR              reduce using rule 22 (conditions -> ID .)
+
+
+state 6
+
+    (1) while_statement -> WHILE LBRACE conditions RBRACE . LFLOWER statements RFLOWER
+    (2) while_statement -> WHILE LBRACE conditions RBRACE . singleStatement
+    (8) singleStatement -> . list SEMICOLON
+    (9) singleStatement -> . empty
+    (10) singleStatement -> . while_statement
+    (11) list -> . ID list
+    (12) list -> . ID
+    (13) empty -> .
+    (1) while_statement -> . WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> . WHILE LBRACE conditions RBRACE singleStatement
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+    LFLOWER         shift and go to state 13
+    ID              shift and go to state 18
+    $end            reduce using rule 13 (empty -> .)
+    RFLOWER         reduce using rule 13 (empty -> .)
+    WHILE           shift and go to state 2
+
+  ! ID              [ reduce using rule 13 (empty -> .) ]
+  ! WHILE           [ reduce using rule 13 (empty -> .) ]
+
+    singleStatement                shift and go to state 14
+    list                           shift and go to state 15
+    empty                          shift and go to state 16
+    while_statement                shift and go to state 17
+
+state 7
+
+    (20) conditions -> conditions AND . conditions
+    (14) conditions -> . ID EQUALS ID
+    (15) conditions -> . ID GREATER ID
+    (16) conditions -> . ID LESSER ID
+    (17) conditions -> . ID GREATER EQUALS ID
+    (18) conditions -> . ID LESSER EQUALS ID
+    (19) conditions -> . ID NOT EQUALS ID
+    (20) conditions -> . conditions AND conditions
+    (21) conditions -> . conditions OR conditions
+    (22) conditions -> . ID
+
+    ID              shift and go to state 5
+
+    conditions                     shift and go to state 19
+
+state 8
+
+    (21) conditions -> conditions OR . conditions
+    (14) conditions -> . ID EQUALS ID
+    (15) conditions -> . ID GREATER ID
+    (16) conditions -> . ID LESSER ID
+    (17) conditions -> . ID GREATER EQUALS ID
+    (18) conditions -> . ID LESSER EQUALS ID
+    (19) conditions -> . ID NOT EQUALS ID
+    (20) conditions -> . conditions AND conditions
+    (21) conditions -> . conditions OR conditions
+    (22) conditions -> . ID
+
+    ID              shift and go to state 5
+
+    conditions                     shift and go to state 20
+
+state 9
+
+    (14) conditions -> ID EQUALS . ID
+
+    ID              shift and go to state 21
+
+
+state 10
+
+    (15) conditions -> ID GREATER . ID
+    (17) conditions -> ID GREATER . EQUALS ID
+
+    ID              shift and go to state 22
+    EQUALS          shift and go to state 23
+
+
+state 11
+
+    (16) conditions -> ID LESSER . ID
+    (18) conditions -> ID LESSER . EQUALS ID
+
+    ID              shift and go to state 24
+    EQUALS          shift and go to state 25
+
+
+state 12
+
+    (19) conditions -> ID NOT . EQUALS ID
+
+    EQUALS          shift and go to state 26
+
+
+state 13
+
+    (1) while_statement -> WHILE LBRACE conditions RBRACE LFLOWER . statements RFLOWER
+    (3) statements -> . statements statement
+    (4) statements -> . statement
+    (5) statement -> . list SEMICOLON
+    (6) statement -> . while_statement
+    (7) statement -> . empty
+    (11) list -> . ID list
+    (12) list -> . ID
+    (1) while_statement -> . WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> . WHILE LBRACE conditions RBRACE singleStatement
+    (13) empty -> .
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+    ID              shift and go to state 18
+    WHILE           shift and go to state 2
+    RFLOWER         reduce using rule 13 (empty -> .)
+
+  ! ID              [ reduce using rule 13 (empty -> .) ]
+  ! WHILE           [ reduce using rule 13 (empty -> .) ]
+
+    statements                     shift and go to state 27
+    statement                      shift and go to state 28
+    list                           shift and go to state 29
+    while_statement                shift and go to state 30
+    empty                          shift and go to state 31
+
+state 14
+
+    (2) while_statement -> WHILE LBRACE conditions RBRACE singleStatement .
+
+    $end            reduce using rule 2 (while_statement -> WHILE LBRACE conditions RBRACE singleStatement .)
+    RFLOWER         reduce using rule 2 (while_statement -> WHILE LBRACE conditions RBRACE singleStatement .)
+    ID              reduce using rule 2 (while_statement -> WHILE LBRACE conditions RBRACE singleStatement .)
+    WHILE           reduce using rule 2 (while_statement -> WHILE LBRACE conditions RBRACE singleStatement .)
+
+
+state 15
+
+    (8) singleStatement -> list . SEMICOLON
+
+    SEMICOLON       shift and go to state 32
+
+
+state 16
+
+    (9) singleStatement -> empty .
+
+    $end            reduce using rule 9 (singleStatement -> empty .)
+    RFLOWER         reduce using rule 9 (singleStatement -> empty .)
+    ID              reduce using rule 9 (singleStatement -> empty .)
+    WHILE           reduce using rule 9 (singleStatement -> empty .)
+
+
+state 17
+
+    (10) singleStatement -> while_statement .
+
+    $end            reduce using rule 10 (singleStatement -> while_statement .)
+    RFLOWER         reduce using rule 10 (singleStatement -> while_statement .)
+    ID              reduce using rule 10 (singleStatement -> while_statement .)
+    WHILE           reduce using rule 10 (singleStatement -> while_statement .)
+
+
+state 18
+
+    (11) list -> ID . list
+    (12) list -> ID .
+    (11) list -> . ID list
+    (12) list -> . ID
+
+    SEMICOLON       reduce using rule 12 (list -> ID .)
+    ID              shift and go to state 18
+
+    list                           shift and go to state 33
+
+state 19
+
+    (20) conditions -> conditions AND conditions .
+    (20) conditions -> conditions . AND conditions
+    (21) conditions -> conditions . OR conditions
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RBRACE          reduce using rule 20 (conditions -> conditions AND conditions .)
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+  ! AND             [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
+  ! OR              [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
+
+
+state 20
+
+    (21) conditions -> conditions OR conditions .
+    (20) conditions -> conditions . AND conditions
+    (21) conditions -> conditions . OR conditions
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RBRACE          reduce using rule 21 (conditions -> conditions OR conditions .)
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+  ! AND             [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
+  ! OR              [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
+
+
+state 21
+
+    (14) conditions -> ID EQUALS ID .
+
+    RBRACE          reduce using rule 14 (conditions -> ID EQUALS ID .)
+    AND             reduce using rule 14 (conditions -> ID EQUALS ID .)
+    OR              reduce using rule 14 (conditions -> ID EQUALS ID .)
+
+
+state 22
+
+    (15) conditions -> ID GREATER ID .
+
+    RBRACE          reduce using rule 15 (conditions -> ID GREATER ID .)
+    AND             reduce using rule 15 (conditions -> ID GREATER ID .)
+    OR              reduce using rule 15 (conditions -> ID GREATER ID .)
+
+
+state 23
+
+    (17) conditions -> ID GREATER EQUALS . ID
+
+    ID              shift and go to state 34
+
+
+state 24
+
+    (16) conditions -> ID LESSER ID .
+
+    RBRACE          reduce using rule 16 (conditions -> ID LESSER ID .)
+    AND             reduce using rule 16 (conditions -> ID LESSER ID .)
+    OR              reduce using rule 16 (conditions -> ID LESSER ID .)
+
+
+state 25
+
+    (18) conditions -> ID LESSER EQUALS . ID
+
+    ID              shift and go to state 35
+
+
+state 26
+
+    (19) conditions -> ID NOT EQUALS . ID
+
+    ID              shift and go to state 36
+
+
+state 27
+
+    (1) while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements . RFLOWER
+    (3) statements -> statements . statement
+    (5) statement -> . list SEMICOLON
+    (6) statement -> . while_statement
+    (7) statement -> . empty
+    (11) list -> . ID list
+    (12) list -> . ID
+    (1) while_statement -> . WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) while_statement -> . WHILE LBRACE conditions RBRACE singleStatement
+    (13) empty -> .
+
+  ! shift/reduce conflict for RFLOWER resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+    RFLOWER         shift and go to state 37
+    ID              shift and go to state 18
+    WHILE           shift and go to state 2
+
+  ! RFLOWER         [ reduce using rule 13 (empty -> .) ]
+  ! ID              [ reduce using rule 13 (empty -> .) ]
+  ! WHILE           [ reduce using rule 13 (empty -> .) ]
+
+    statement                      shift and go to state 38
+    list                           shift and go to state 29
+    while_statement                shift and go to state 30
+    empty                          shift and go to state 31
+
+state 28
+
+    (4) statements -> statement .
+
+    RFLOWER         reduce using rule 4 (statements -> statement .)
+    ID              reduce using rule 4 (statements -> statement .)
+    WHILE           reduce using rule 4 (statements -> statement .)
+
+
+state 29
+
+    (5) statement -> list . SEMICOLON
+
+    SEMICOLON       shift and go to state 39
+
+
+state 30
+
+    (6) statement -> while_statement .
+
+    RFLOWER         reduce using rule 6 (statement -> while_statement .)
+    ID              reduce using rule 6 (statement -> while_statement .)
+    WHILE           reduce using rule 6 (statement -> while_statement .)
+
+
+state 31
+
+    (7) statement -> empty .
+
+    RFLOWER         reduce using rule 7 (statement -> empty .)
+    ID              reduce using rule 7 (statement -> empty .)
+    WHILE           reduce using rule 7 (statement -> empty .)
+
+
+state 32
+
+    (8) singleStatement -> list SEMICOLON .
+
+    $end            reduce using rule 8 (singleStatement -> list SEMICOLON .)
+    RFLOWER         reduce using rule 8 (singleStatement -> list SEMICOLON .)
+    ID              reduce using rule 8 (singleStatement -> list SEMICOLON .)
+    WHILE           reduce using rule 8 (singleStatement -> list SEMICOLON .)
+
+
+state 33
+
+    (11) list -> ID list .
+
+    SEMICOLON       reduce using rule 11 (list -> ID list .)
+
+
+state 34
+
+    (17) conditions -> ID GREATER EQUALS ID .
+
+    RBRACE          reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+    AND             reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+    OR              reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+
+
+state 35
+
+    (18) conditions -> ID LESSER EQUALS ID .
+
+    RBRACE          reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+    AND             reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+    OR              reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+
+
+state 36
+
+    (19) conditions -> ID NOT EQUALS ID .
+
+    RBRACE          reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+    AND             reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+    OR              reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+
+
+state 37
+
+    (1) while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER .
+
+    $end            reduce using rule 1 (while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+    RFLOWER         reduce using rule 1 (while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+    ID              reduce using rule 1 (while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+    WHILE           reduce using rule 1 (while_statement -> WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+
+
+state 38
+
+    (3) statements -> statements statement .
+
+    RFLOWER         reduce using rule 3 (statements -> statements statement .)
+    ID              reduce using rule 3 (statements -> statements statement .)
+    WHILE           reduce using rule 3 (statements -> statements statement .)
+
+
+state 39
+
+    (5) statement -> list SEMICOLON .
+
+    RFLOWER         reduce using rule 5 (statement -> list SEMICOLON .)
+    ID              reduce using rule 5 (statement -> list SEMICOLON .)
+    WHILE           reduce using rule 5 (statement -> list SEMICOLON .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ID in state 6 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 6 resolved as shift
+WARNING: shift/reduce conflict for ID in state 13 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 13 resolved as shift
+WARNING: shift/reduce conflict for AND in state 19 resolved as shift
+WARNING: shift/reduce conflict for OR in state 19 resolved as shift
+WARNING: shift/reduce conflict for AND in state 20 resolved as shift
+WARNING: shift/reduce conflict for OR in state 20 resolved as shift
+WARNING: shift/reduce conflict for RFLOWER in state 27 resolved as shift
+WARNING: shift/reduce conflict for ID in state 27 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 27 resolved as shift

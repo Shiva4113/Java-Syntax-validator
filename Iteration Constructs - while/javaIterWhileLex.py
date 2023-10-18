@@ -1,13 +1,10 @@
 import ply.lex as lex
 
-tokens = ('IF','ELSE','LBRACE','LESSER','GREATER','EQUALS','NOT','AND','OR','RBRACE','LFLOWER','SEMICOLON','RFLOWER','ID')
+#defining tokens  --> while(condition){statements}
+tokens = ('WHILE','LBRACE','LESSER','GREATER','NOT','AND','OR','EQUALS','RBRACE','LFLOWER','RFLOWER','SEMICOLON','ID')
 
-def t_IF(t):
-    r'if'
-    return t
-
-def t_ELSE(t):
-    r'else'
+def t_WHILE(t):
+    r'while'
     return t
 
 t_LBRACE = r'\('
@@ -27,15 +24,15 @@ t_AND = r'&&'
 t_OR = r'\|\|'
 t_SEMICOLON = r';'
 
-t_ignore = ' \t\n'
+t_ignore = ' \t'
 
 def t_error(t):
-    print(f"Illegal character found '{t.value[0]}'")
+    print(f"Illegal character found {t.value[0]}")
     t.lexer.skip(1)
 
 lexer = lex.lex()
 
-data = input()
+data = '''while(a>b){}'''
 
 lexer.input(data)
 
