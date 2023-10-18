@@ -8,10 +8,13 @@ flag = 0
 def p_if(p):
     '''
     if_statement    : IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-                    | IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-                    | ELSE statements
+                    | IF LBRACE conditions RBRACE statementSingle
     '''
-    p[0] = (p[1],p[3],p[6])#p[0] = if_statement, p[3] = condition, p[6] = statements
+    
+    if len(p) == 6:
+        p[0] = (p[1],p[3],p[5])
+    else:
+        p[0] = (p[1],p[3],p[6])#p[0] = if_statement, p[3] = condition, p[6] = statements
 
 def p_statements(p):
     '''
@@ -19,9 +22,9 @@ def p_statements(p):
                | statement
     '''
     if len(p) == 2:
-        p[0] = ['statements',[p[1]]]
+        p[0] = (p[1],)
     else:
-        p[0] = ['statements',p[1] + [p[2]]]
+        p[0] = p[1]+(p[2],)
 
 def p_statement(p):
     '''
@@ -29,7 +32,18 @@ def p_statement(p):
              | if_statement
              | empty
     '''
-    p[0] = p[1]
+    p[0] = (p[1],) if len(p) == 2 else p[1]
+
+def p_statementSingle(p):
+    '''
+    statementSingle : if_statement
+                    | list SEMICOLON
+                    | empty
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],)
+    else:
+        p[0] = None
 
 def p_list(p):
     '''
@@ -62,10 +76,8 @@ def p_conditions(p):
     '''
     if len(p) == 2:
         p[0] = ('condition',p[1]) #conditions = ID
-    elif len(p) == 4:
-        p[0] = ('condition',p[1]+""+p[2]+""+p[3])
     else:
-        pass
+        p[0] = ('condition',(p[1],p[2],p[3]))
     
 def p_error(p):
     print("Syntax error")

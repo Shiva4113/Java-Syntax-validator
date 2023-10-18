@@ -1,55 +1,62 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    ELSE
+
 Grammar
 
 Rule 0     S' -> if_statement
 Rule 1     if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-Rule 2     if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-Rule 3     if_statement -> ELSE statements
-Rule 4     statements -> statements statement
-Rule 5     statements -> statement
-Rule 6     statement -> list SEMICOLON
-Rule 7     statement -> if_statement
-Rule 8     statement -> empty
-Rule 9     list -> ID list
-Rule 10    list -> ID
-Rule 11    empty -> <empty>
-Rule 12    conditions -> ID EQUALS ID
-Rule 13    conditions -> ID GREATER ID
-Rule 14    conditions -> ID LESSER ID
-Rule 15    conditions -> ID GREATER EQUALS ID
-Rule 16    conditions -> ID LESSER EQUALS ID
-Rule 17    conditions -> ID NOT EQUALS ID
-Rule 18    conditions -> conditions AND conditions
-Rule 19    conditions -> conditions OR conditions
-Rule 20    conditions -> ID
+Rule 2     if_statement -> IF LBRACE conditions RBRACE statementSingle
+Rule 3     statements -> statements statement
+Rule 4     statements -> statement
+Rule 5     statement -> list SEMICOLON
+Rule 6     statement -> if_statement
+Rule 7     statement -> empty
+Rule 8     statementSingle -> if_statement
+Rule 9     statementSingle -> list SEMICOLON
+Rule 10    statementSingle -> empty
+Rule 11    list -> ID list
+Rule 12    list -> ID
+Rule 13    empty -> <empty>
+Rule 14    conditions -> ID EQUALS ID
+Rule 15    conditions -> ID GREATER ID
+Rule 16    conditions -> ID LESSER ID
+Rule 17    conditions -> ID GREATER EQUALS ID
+Rule 18    conditions -> ID LESSER EQUALS ID
+Rule 19    conditions -> ID NOT EQUALS ID
+Rule 20    conditions -> conditions AND conditions
+Rule 21    conditions -> conditions OR conditions
+Rule 22    conditions -> ID
 
 Terminals, with rules where they appear
 
-AND                  : 18
-ELSE                 : 2 3
-EQUALS               : 12 15 16 17
-GREATER              : 13 15
-ID                   : 9 10 12 12 13 13 14 14 15 15 16 16 17 17 20
+AND                  : 20
+ELSE                 : 
+EQUALS               : 14 17 18 19
+GREATER              : 15 17
+ID                   : 11 12 14 14 15 15 16 16 17 17 18 18 19 19 22
 IF                   : 1 2
 LBRACE               : 1 2
-LESSER               : 14 16
-LFLOWER              : 1 2
-NOT                  : 17
-OR                   : 19
+LESSER               : 16 18
+LFLOWER              : 1
+NOT                  : 19
+OR                   : 21
 RBRACE               : 1 2
-RFLOWER              : 1 2
-SEMICOLON            : 6
+RFLOWER              : 1
+SEMICOLON            : 5 9
 error                : 
 
 Nonterminals, with rules where they appear
 
-conditions           : 1 2 18 18 19 19
-empty                : 8
-if_statement         : 2 7 0
-list                 : 6 9
-statement            : 4 5
-statements           : 1 2 3 4
+conditions           : 1 2 20 20 21 21
+empty                : 7 10
+if_statement         : 6 8 0
+list                 : 5 9 11
+statement            : 3 4
+statementSingle      : 2
+statements           : 1 3
 
 Parsing method: LALR
 
@@ -57,11 +64,9 @@ state 0
 
     (0) S' -> . if_statement
     (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (3) if_statement -> . ELSE statements
+    (2) if_statement -> . IF LBRACE conditions RBRACE statementSingle
 
     IF              shift and go to state 2
-    ELSE            shift and go to state 3
 
     if_statement                   shift and go to state 1
 
@@ -74,526 +79,458 @@ state 1
 state 2
 
     (1) if_statement -> IF . LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> IF . LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
+    (2) if_statement -> IF . LBRACE conditions RBRACE statementSingle
 
-    LBRACE          shift and go to state 4
+    LBRACE          shift and go to state 3
 
 
 state 3
 
-    (3) if_statement -> ELSE . statements
-    (4) statements -> . statements statement
-    (5) statements -> . statement
-    (6) statement -> . list SEMICOLON
-    (7) statement -> . if_statement
-    (8) statement -> . empty
-    (9) list -> . ID list
-    (10) list -> . ID
-    (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (3) if_statement -> . ELSE statements
-    (11) empty -> .
+    (1) if_statement -> IF LBRACE . conditions RBRACE LFLOWER statements RFLOWER
+    (2) if_statement -> IF LBRACE . conditions RBRACE statementSingle
+    (14) conditions -> . ID EQUALS ID
+    (15) conditions -> . ID GREATER ID
+    (16) conditions -> . ID LESSER ID
+    (17) conditions -> . ID GREATER EQUALS ID
+    (18) conditions -> . ID LESSER EQUALS ID
+    (19) conditions -> . ID NOT EQUALS ID
+    (20) conditions -> . conditions AND conditions
+    (21) conditions -> . conditions OR conditions
+    (22) conditions -> . ID
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-    ID              shift and go to state 10
-    IF              shift and go to state 2
-    ELSE            shift and go to state 3
-    $end            reduce using rule 11 (empty -> .)
-    RFLOWER         reduce using rule 11 (empty -> .)
+    ID              shift and go to state 5
 
-  ! ID              [ reduce using rule 11 (empty -> .) ]
-  ! IF              [ reduce using rule 11 (empty -> .) ]
-  ! ELSE            [ reduce using rule 11 (empty -> .) ]
-
-    statements                     shift and go to state 5
-    statement                      shift and go to state 6
-    list                           shift and go to state 7
-    if_statement                   shift and go to state 8
-    empty                          shift and go to state 9
+    conditions                     shift and go to state 4
 
 state 4
 
-    (1) if_statement -> IF LBRACE . conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> IF LBRACE . conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (12) conditions -> . ID EQUALS ID
-    (13) conditions -> . ID GREATER ID
-    (14) conditions -> . ID LESSER ID
-    (15) conditions -> . ID GREATER EQUALS ID
-    (16) conditions -> . ID LESSER EQUALS ID
-    (17) conditions -> . ID NOT EQUALS ID
-    (18) conditions -> . conditions AND conditions
-    (19) conditions -> . conditions OR conditions
-    (20) conditions -> . ID
+    (1) if_statement -> IF LBRACE conditions . RBRACE LFLOWER statements RFLOWER
+    (2) if_statement -> IF LBRACE conditions . RBRACE statementSingle
+    (20) conditions -> conditions . AND conditions
+    (21) conditions -> conditions . OR conditions
 
-    ID              shift and go to state 12
+    RBRACE          shift and go to state 6
+    AND             shift and go to state 7
+    OR              shift and go to state 8
 
-    conditions                     shift and go to state 11
 
 state 5
 
-    (3) if_statement -> ELSE statements .
-    (4) statements -> statements . statement
-    (6) statement -> . list SEMICOLON
-    (7) statement -> . if_statement
-    (8) statement -> . empty
-    (9) list -> . ID list
-    (10) list -> . ID
-    (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (3) if_statement -> . ELSE statements
-    (11) empty -> .
+    (14) conditions -> ID . EQUALS ID
+    (15) conditions -> ID . GREATER ID
+    (16) conditions -> ID . LESSER ID
+    (17) conditions -> ID . GREATER EQUALS ID
+    (18) conditions -> ID . LESSER EQUALS ID
+    (19) conditions -> ID . NOT EQUALS ID
+    (22) conditions -> ID .
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-  ! reduce/reduce conflict for $end resolved using rule 3 (if_statement -> ELSE statements .)
-  ! reduce/reduce conflict for RFLOWER resolved using rule 3 (if_statement -> ELSE statements .)
-    $end            reduce using rule 3 (if_statement -> ELSE statements .)
-    RFLOWER         reduce using rule 3 (if_statement -> ELSE statements .)
-    ID              shift and go to state 10
-    IF              shift and go to state 2
-    ELSE            shift and go to state 3
+    EQUALS          shift and go to state 9
+    GREATER         shift and go to state 10
+    LESSER          shift and go to state 11
+    NOT             shift and go to state 12
+    RBRACE          reduce using rule 22 (conditions -> ID .)
+    AND             reduce using rule 22 (conditions -> ID .)
+    OR              reduce using rule 22 (conditions -> ID .)
 
-  ! ID              [ reduce using rule 3 (if_statement -> ELSE statements .) ]
-  ! IF              [ reduce using rule 3 (if_statement -> ELSE statements .) ]
-  ! ELSE            [ reduce using rule 3 (if_statement -> ELSE statements .) ]
-  ! ID              [ reduce using rule 11 (empty -> .) ]
-  ! IF              [ reduce using rule 11 (empty -> .) ]
-  ! ELSE            [ reduce using rule 11 (empty -> .) ]
-  ! $end            [ reduce using rule 11 (empty -> .) ]
-  ! RFLOWER         [ reduce using rule 11 (empty -> .) ]
-
-    statement                      shift and go to state 13
-    list                           shift and go to state 7
-    if_statement                   shift and go to state 8
-    empty                          shift and go to state 9
 
 state 6
 
-    (5) statements -> statement .
+    (1) if_statement -> IF LBRACE conditions RBRACE . LFLOWER statements RFLOWER
+    (2) if_statement -> IF LBRACE conditions RBRACE . statementSingle
+    (8) statementSingle -> . if_statement
+    (9) statementSingle -> . list SEMICOLON
+    (10) statementSingle -> . empty
+    (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) if_statement -> . IF LBRACE conditions RBRACE statementSingle
+    (11) list -> . ID list
+    (12) list -> . ID
+    (13) empty -> .
 
-    ID              reduce using rule 5 (statements -> statement .)
-    IF              reduce using rule 5 (statements -> statement .)
-    ELSE            reduce using rule 5 (statements -> statement .)
-    $end            reduce using rule 5 (statements -> statement .)
-    RFLOWER         reduce using rule 5 (statements -> statement .)
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    LFLOWER         shift and go to state 13
+    IF              shift and go to state 2
+    ID              shift and go to state 18
+    $end            reduce using rule 13 (empty -> .)
+    RFLOWER         reduce using rule 13 (empty -> .)
 
+  ! ID              [ reduce using rule 13 (empty -> .) ]
+  ! IF              [ reduce using rule 13 (empty -> .) ]
+
+    statementSingle                shift and go to state 14
+    if_statement                   shift and go to state 15
+    list                           shift and go to state 16
+    empty                          shift and go to state 17
 
 state 7
 
-    (6) statement -> list . SEMICOLON
+    (20) conditions -> conditions AND . conditions
+    (14) conditions -> . ID EQUALS ID
+    (15) conditions -> . ID GREATER ID
+    (16) conditions -> . ID LESSER ID
+    (17) conditions -> . ID GREATER EQUALS ID
+    (18) conditions -> . ID LESSER EQUALS ID
+    (19) conditions -> . ID NOT EQUALS ID
+    (20) conditions -> . conditions AND conditions
+    (21) conditions -> . conditions OR conditions
+    (22) conditions -> . ID
 
-    SEMICOLON       shift and go to state 14
+    ID              shift and go to state 5
 
+    conditions                     shift and go to state 19
 
 state 8
 
-    (7) statement -> if_statement .
+    (21) conditions -> conditions OR . conditions
+    (14) conditions -> . ID EQUALS ID
+    (15) conditions -> . ID GREATER ID
+    (16) conditions -> . ID LESSER ID
+    (17) conditions -> . ID GREATER EQUALS ID
+    (18) conditions -> . ID LESSER EQUALS ID
+    (19) conditions -> . ID NOT EQUALS ID
+    (20) conditions -> . conditions AND conditions
+    (21) conditions -> . conditions OR conditions
+    (22) conditions -> . ID
 
-    ID              reduce using rule 7 (statement -> if_statement .)
-    IF              reduce using rule 7 (statement -> if_statement .)
-    ELSE            reduce using rule 7 (statement -> if_statement .)
-    $end            reduce using rule 7 (statement -> if_statement .)
-    RFLOWER         reduce using rule 7 (statement -> if_statement .)
+    ID              shift and go to state 5
 
+    conditions                     shift and go to state 20
 
 state 9
 
-    (8) statement -> empty .
+    (14) conditions -> ID EQUALS . ID
 
-    ID              reduce using rule 8 (statement -> empty .)
-    IF              reduce using rule 8 (statement -> empty .)
-    ELSE            reduce using rule 8 (statement -> empty .)
-    $end            reduce using rule 8 (statement -> empty .)
-    RFLOWER         reduce using rule 8 (statement -> empty .)
+    ID              shift and go to state 21
 
 
 state 10
 
-    (9) list -> ID . list
-    (10) list -> ID .
-    (9) list -> . ID list
-    (10) list -> . ID
+    (15) conditions -> ID GREATER . ID
+    (17) conditions -> ID GREATER . EQUALS ID
 
-    SEMICOLON       reduce using rule 10 (list -> ID .)
-    ID              shift and go to state 10
+    ID              shift and go to state 22
+    EQUALS          shift and go to state 23
 
-    list                           shift and go to state 15
 
 state 11
 
-    (1) if_statement -> IF LBRACE conditions . RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> IF LBRACE conditions . RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (18) conditions -> conditions . AND conditions
-    (19) conditions -> conditions . OR conditions
+    (16) conditions -> ID LESSER . ID
+    (18) conditions -> ID LESSER . EQUALS ID
 
-    RBRACE          shift and go to state 16
-    AND             shift and go to state 17
-    OR              shift and go to state 18
+    ID              shift and go to state 24
+    EQUALS          shift and go to state 25
 
 
 state 12
 
-    (12) conditions -> ID . EQUALS ID
-    (13) conditions -> ID . GREATER ID
-    (14) conditions -> ID . LESSER ID
-    (15) conditions -> ID . GREATER EQUALS ID
-    (16) conditions -> ID . LESSER EQUALS ID
-    (17) conditions -> ID . NOT EQUALS ID
-    (20) conditions -> ID .
+    (19) conditions -> ID NOT . EQUALS ID
 
-    EQUALS          shift and go to state 19
-    GREATER         shift and go to state 20
-    LESSER          shift and go to state 21
-    NOT             shift and go to state 22
-    RBRACE          reduce using rule 20 (conditions -> ID .)
-    AND             reduce using rule 20 (conditions -> ID .)
-    OR              reduce using rule 20 (conditions -> ID .)
+    EQUALS          shift and go to state 26
 
 
 state 13
 
-    (4) statements -> statements statement .
+    (1) if_statement -> IF LBRACE conditions RBRACE LFLOWER . statements RFLOWER
+    (3) statements -> . statements statement
+    (4) statements -> . statement
+    (5) statement -> . list SEMICOLON
+    (6) statement -> . if_statement
+    (7) statement -> . empty
+    (11) list -> . ID list
+    (12) list -> . ID
+    (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
+    (2) if_statement -> . IF LBRACE conditions RBRACE statementSingle
+    (13) empty -> .
 
-    ID              reduce using rule 4 (statements -> statements statement .)
-    IF              reduce using rule 4 (statements -> statements statement .)
-    ELSE            reduce using rule 4 (statements -> statements statement .)
-    $end            reduce using rule 4 (statements -> statements statement .)
-    RFLOWER         reduce using rule 4 (statements -> statements statement .)
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    ID              shift and go to state 18
+    IF              shift and go to state 2
+    RFLOWER         reduce using rule 13 (empty -> .)
 
+  ! ID              [ reduce using rule 13 (empty -> .) ]
+  ! IF              [ reduce using rule 13 (empty -> .) ]
+
+    statements                     shift and go to state 27
+    statement                      shift and go to state 28
+    list                           shift and go to state 29
+    if_statement                   shift and go to state 30
+    empty                          shift and go to state 31
 
 state 14
 
-    (6) statement -> list SEMICOLON .
+    (2) if_statement -> IF LBRACE conditions RBRACE statementSingle .
 
-    ID              reduce using rule 6 (statement -> list SEMICOLON .)
-    IF              reduce using rule 6 (statement -> list SEMICOLON .)
-    ELSE            reduce using rule 6 (statement -> list SEMICOLON .)
-    $end            reduce using rule 6 (statement -> list SEMICOLON .)
-    RFLOWER         reduce using rule 6 (statement -> list SEMICOLON .)
+    $end            reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE statementSingle .)
+    RFLOWER         reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE statementSingle .)
+    ID              reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE statementSingle .)
+    IF              reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE statementSingle .)
 
 
 state 15
 
-    (9) list -> ID list .
+    (8) statementSingle -> if_statement .
 
-    SEMICOLON       reduce using rule 9 (list -> ID list .)
+    $end            reduce using rule 8 (statementSingle -> if_statement .)
+    RFLOWER         reduce using rule 8 (statementSingle -> if_statement .)
+    ID              reduce using rule 8 (statementSingle -> if_statement .)
+    IF              reduce using rule 8 (statementSingle -> if_statement .)
 
 
 state 16
 
-    (1) if_statement -> IF LBRACE conditions RBRACE . LFLOWER statements RFLOWER
-    (2) if_statement -> IF LBRACE conditions RBRACE . LFLOWER statements RFLOWER ELSE if_statement
+    (9) statementSingle -> list . SEMICOLON
 
-    LFLOWER         shift and go to state 23
+    SEMICOLON       shift and go to state 32
 
 
 state 17
 
-    (18) conditions -> conditions AND . conditions
-    (12) conditions -> . ID EQUALS ID
-    (13) conditions -> . ID GREATER ID
-    (14) conditions -> . ID LESSER ID
-    (15) conditions -> . ID GREATER EQUALS ID
-    (16) conditions -> . ID LESSER EQUALS ID
-    (17) conditions -> . ID NOT EQUALS ID
-    (18) conditions -> . conditions AND conditions
-    (19) conditions -> . conditions OR conditions
-    (20) conditions -> . ID
+    (10) statementSingle -> empty .
 
-    ID              shift and go to state 12
+    $end            reduce using rule 10 (statementSingle -> empty .)
+    RFLOWER         reduce using rule 10 (statementSingle -> empty .)
+    ID              reduce using rule 10 (statementSingle -> empty .)
+    IF              reduce using rule 10 (statementSingle -> empty .)
 
-    conditions                     shift and go to state 24
 
 state 18
 
-    (19) conditions -> conditions OR . conditions
-    (12) conditions -> . ID EQUALS ID
-    (13) conditions -> . ID GREATER ID
-    (14) conditions -> . ID LESSER ID
-    (15) conditions -> . ID GREATER EQUALS ID
-    (16) conditions -> . ID LESSER EQUALS ID
-    (17) conditions -> . ID NOT EQUALS ID
-    (18) conditions -> . conditions AND conditions
-    (19) conditions -> . conditions OR conditions
-    (20) conditions -> . ID
+    (11) list -> ID . list
+    (12) list -> ID .
+    (11) list -> . ID list
+    (12) list -> . ID
 
-    ID              shift and go to state 12
+    SEMICOLON       reduce using rule 12 (list -> ID .)
+    ID              shift and go to state 18
 
-    conditions                     shift and go to state 25
+    list                           shift and go to state 33
 
 state 19
 
-    (12) conditions -> ID EQUALS . ID
+    (20) conditions -> conditions AND conditions .
+    (20) conditions -> conditions . AND conditions
+    (21) conditions -> conditions . OR conditions
 
-    ID              shift and go to state 26
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RBRACE          reduce using rule 20 (conditions -> conditions AND conditions .)
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+  ! AND             [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
+  ! OR              [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
 
 
 state 20
 
-    (13) conditions -> ID GREATER . ID
-    (15) conditions -> ID GREATER . EQUALS ID
+    (21) conditions -> conditions OR conditions .
+    (20) conditions -> conditions . AND conditions
+    (21) conditions -> conditions . OR conditions
 
-    ID              shift and go to state 27
-    EQUALS          shift and go to state 28
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RBRACE          reduce using rule 21 (conditions -> conditions OR conditions .)
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+  ! AND             [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
+  ! OR              [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
 
 
 state 21
 
-    (14) conditions -> ID LESSER . ID
-    (16) conditions -> ID LESSER . EQUALS ID
+    (14) conditions -> ID EQUALS ID .
 
-    ID              shift and go to state 29
-    EQUALS          shift and go to state 30
+    RBRACE          reduce using rule 14 (conditions -> ID EQUALS ID .)
+    AND             reduce using rule 14 (conditions -> ID EQUALS ID .)
+    OR              reduce using rule 14 (conditions -> ID EQUALS ID .)
 
 
 state 22
 
-    (17) conditions -> ID NOT . EQUALS ID
+    (15) conditions -> ID GREATER ID .
 
-    EQUALS          shift and go to state 31
+    RBRACE          reduce using rule 15 (conditions -> ID GREATER ID .)
+    AND             reduce using rule 15 (conditions -> ID GREATER ID .)
+    OR              reduce using rule 15 (conditions -> ID GREATER ID .)
 
 
 state 23
 
-    (1) if_statement -> IF LBRACE conditions RBRACE LFLOWER . statements RFLOWER
-    (2) if_statement -> IF LBRACE conditions RBRACE LFLOWER . statements RFLOWER ELSE if_statement
-    (4) statements -> . statements statement
-    (5) statements -> . statement
-    (6) statement -> . list SEMICOLON
-    (7) statement -> . if_statement
-    (8) statement -> . empty
-    (9) list -> . ID list
-    (10) list -> . ID
-    (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (3) if_statement -> . ELSE statements
-    (11) empty -> .
-
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-    ID              shift and go to state 10
-    IF              shift and go to state 2
-    ELSE            shift and go to state 3
-    RFLOWER         reduce using rule 11 (empty -> .)
-
-  ! ID              [ reduce using rule 11 (empty -> .) ]
-  ! IF              [ reduce using rule 11 (empty -> .) ]
-  ! ELSE            [ reduce using rule 11 (empty -> .) ]
-
-    statements                     shift and go to state 32
-    if_statement                   shift and go to state 8
-    statement                      shift and go to state 6
-    list                           shift and go to state 7
-    empty                          shift and go to state 9
-
-state 24
-
-    (18) conditions -> conditions AND conditions .
-    (18) conditions -> conditions . AND conditions
-    (19) conditions -> conditions . OR conditions
-
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    RBRACE          reduce using rule 18 (conditions -> conditions AND conditions .)
-    AND             shift and go to state 17
-    OR              shift and go to state 18
-
-  ! AND             [ reduce using rule 18 (conditions -> conditions AND conditions .) ]
-  ! OR              [ reduce using rule 18 (conditions -> conditions AND conditions .) ]
-
-
-state 25
-
-    (19) conditions -> conditions OR conditions .
-    (18) conditions -> conditions . AND conditions
-    (19) conditions -> conditions . OR conditions
-
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    RBRACE          reduce using rule 19 (conditions -> conditions OR conditions .)
-    AND             shift and go to state 17
-    OR              shift and go to state 18
-
-  ! AND             [ reduce using rule 19 (conditions -> conditions OR conditions .) ]
-  ! OR              [ reduce using rule 19 (conditions -> conditions OR conditions .) ]
-
-
-state 26
-
-    (12) conditions -> ID EQUALS ID .
-
-    RBRACE          reduce using rule 12 (conditions -> ID EQUALS ID .)
-    AND             reduce using rule 12 (conditions -> ID EQUALS ID .)
-    OR              reduce using rule 12 (conditions -> ID EQUALS ID .)
-
-
-state 27
-
-    (13) conditions -> ID GREATER ID .
-
-    RBRACE          reduce using rule 13 (conditions -> ID GREATER ID .)
-    AND             reduce using rule 13 (conditions -> ID GREATER ID .)
-    OR              reduce using rule 13 (conditions -> ID GREATER ID .)
-
-
-state 28
-
-    (15) conditions -> ID GREATER EQUALS . ID
-
-    ID              shift and go to state 33
-
-
-state 29
-
-    (14) conditions -> ID LESSER ID .
-
-    RBRACE          reduce using rule 14 (conditions -> ID LESSER ID .)
-    AND             reduce using rule 14 (conditions -> ID LESSER ID .)
-    OR              reduce using rule 14 (conditions -> ID LESSER ID .)
-
-
-state 30
-
-    (16) conditions -> ID LESSER EQUALS . ID
+    (17) conditions -> ID GREATER EQUALS . ID
 
     ID              shift and go to state 34
 
 
-state 31
+state 24
 
-    (17) conditions -> ID NOT EQUALS . ID
+    (16) conditions -> ID LESSER ID .
+
+    RBRACE          reduce using rule 16 (conditions -> ID LESSER ID .)
+    AND             reduce using rule 16 (conditions -> ID LESSER ID .)
+    OR              reduce using rule 16 (conditions -> ID LESSER ID .)
+
+
+state 25
+
+    (18) conditions -> ID LESSER EQUALS . ID
 
     ID              shift and go to state 35
 
 
-state 32
+state 26
+
+    (19) conditions -> ID NOT EQUALS . ID
+
+    ID              shift and go to state 36
+
+
+state 27
 
     (1) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements . RFLOWER
-    (2) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements . RFLOWER ELSE if_statement
-    (4) statements -> statements . statement
-    (6) statement -> . list SEMICOLON
-    (7) statement -> . if_statement
-    (8) statement -> . empty
-    (9) list -> . ID list
-    (10) list -> . ID
+    (3) statements -> statements . statement
+    (5) statement -> . list SEMICOLON
+    (6) statement -> . if_statement
+    (7) statement -> . empty
+    (11) list -> . ID list
+    (12) list -> . ID
     (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (3) if_statement -> . ELSE statements
-    (11) empty -> .
+    (2) if_statement -> . IF LBRACE conditions RBRACE statementSingle
+    (13) empty -> .
 
   ! shift/reduce conflict for RFLOWER resolved as shift
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for ELSE resolved as shift
-    RFLOWER         shift and go to state 36
-    ID              shift and go to state 10
+    RFLOWER         shift and go to state 37
+    ID              shift and go to state 18
     IF              shift and go to state 2
-    ELSE            shift and go to state 3
 
-  ! RFLOWER         [ reduce using rule 11 (empty -> .) ]
-  ! ID              [ reduce using rule 11 (empty -> .) ]
-  ! IF              [ reduce using rule 11 (empty -> .) ]
-  ! ELSE            [ reduce using rule 11 (empty -> .) ]
+  ! RFLOWER         [ reduce using rule 13 (empty -> .) ]
+  ! ID              [ reduce using rule 13 (empty -> .) ]
+  ! IF              [ reduce using rule 13 (empty -> .) ]
 
-    if_statement                   shift and go to state 8
-    statement                      shift and go to state 13
-    list                           shift and go to state 7
-    empty                          shift and go to state 9
+    statement                      shift and go to state 38
+    list                           shift and go to state 29
+    if_statement                   shift and go to state 30
+    empty                          shift and go to state 31
+
+state 28
+
+    (4) statements -> statement .
+
+    RFLOWER         reduce using rule 4 (statements -> statement .)
+    ID              reduce using rule 4 (statements -> statement .)
+    IF              reduce using rule 4 (statements -> statement .)
+
+
+state 29
+
+    (5) statement -> list . SEMICOLON
+
+    SEMICOLON       shift and go to state 39
+
+
+state 30
+
+    (6) statement -> if_statement .
+
+    RFLOWER         reduce using rule 6 (statement -> if_statement .)
+    ID              reduce using rule 6 (statement -> if_statement .)
+    IF              reduce using rule 6 (statement -> if_statement .)
+
+
+state 31
+
+    (7) statement -> empty .
+
+    RFLOWER         reduce using rule 7 (statement -> empty .)
+    ID              reduce using rule 7 (statement -> empty .)
+    IF              reduce using rule 7 (statement -> empty .)
+
+
+state 32
+
+    (9) statementSingle -> list SEMICOLON .
+
+    $end            reduce using rule 9 (statementSingle -> list SEMICOLON .)
+    RFLOWER         reduce using rule 9 (statementSingle -> list SEMICOLON .)
+    ID              reduce using rule 9 (statementSingle -> list SEMICOLON .)
+    IF              reduce using rule 9 (statementSingle -> list SEMICOLON .)
+
 
 state 33
 
-    (15) conditions -> ID GREATER EQUALS ID .
+    (11) list -> ID list .
 
-    RBRACE          reduce using rule 15 (conditions -> ID GREATER EQUALS ID .)
-    AND             reduce using rule 15 (conditions -> ID GREATER EQUALS ID .)
-    OR              reduce using rule 15 (conditions -> ID GREATER EQUALS ID .)
+    SEMICOLON       reduce using rule 11 (list -> ID list .)
 
 
 state 34
 
-    (16) conditions -> ID LESSER EQUALS ID .
+    (17) conditions -> ID GREATER EQUALS ID .
 
-    RBRACE          reduce using rule 16 (conditions -> ID LESSER EQUALS ID .)
-    AND             reduce using rule 16 (conditions -> ID LESSER EQUALS ID .)
-    OR              reduce using rule 16 (conditions -> ID LESSER EQUALS ID .)
+    RBRACE          reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+    AND             reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+    OR              reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
 
 
 state 35
 
-    (17) conditions -> ID NOT EQUALS ID .
+    (18) conditions -> ID LESSER EQUALS ID .
 
-    RBRACE          reduce using rule 17 (conditions -> ID NOT EQUALS ID .)
-    AND             reduce using rule 17 (conditions -> ID NOT EQUALS ID .)
-    OR              reduce using rule 17 (conditions -> ID NOT EQUALS ID .)
+    RBRACE          reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+    AND             reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+    OR              reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
 
 
 state 36
 
-    (1) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .
-    (2) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER . ELSE if_statement
+    (19) conditions -> ID NOT EQUALS ID .
 
-  ! shift/reduce conflict for ELSE resolved as shift
-    $end            reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
-    ID              reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
-    IF              reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
-    RFLOWER         reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
-    ELSE            shift and go to state 37
-
-  ! ELSE            [ reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .) ]
+    RBRACE          reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+    AND             reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+    OR              reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
 
 
 state 37
 
-    (2) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE . if_statement
-    (1) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER
-    (2) if_statement -> . IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement
-    (3) if_statement -> . ELSE statements
+    (1) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .
 
-    IF              shift and go to state 2
-    ELSE            shift and go to state 3
+    $end            reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+    RFLOWER         reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+    ID              reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
+    IF              reduce using rule 1 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER .)
 
-    if_statement                   shift and go to state 38
 
 state 38
 
-    (2) if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement .
+    (3) statements -> statements statement .
 
-    $end            reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement .)
-    ID              reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement .)
-    IF              reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement .)
-    ELSE            reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement .)
-    RFLOWER         reduce using rule 2 (if_statement -> IF LBRACE conditions RBRACE LFLOWER statements RFLOWER ELSE if_statement .)
+    RFLOWER         reduce using rule 3 (statements -> statements statement .)
+    ID              reduce using rule 3 (statements -> statements statement .)
+    IF              reduce using rule 3 (statements -> statements statement .)
+
+
+state 39
+
+    (5) statement -> list SEMICOLON .
+
+    RFLOWER         reduce using rule 5 (statement -> list SEMICOLON .)
+    ID              reduce using rule 5 (statement -> list SEMICOLON .)
+    IF              reduce using rule 5 (statement -> list SEMICOLON .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for ID in state 3 resolved as shift
-WARNING: shift/reduce conflict for IF in state 3 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 3 resolved as shift
-WARNING: shift/reduce conflict for ID in state 5 resolved as shift
-WARNING: shift/reduce conflict for IF in state 5 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 5 resolved as shift
-WARNING: shift/reduce conflict for ID in state 5 resolved as shift
-WARNING: shift/reduce conflict for IF in state 5 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 5 resolved as shift
-WARNING: shift/reduce conflict for ID in state 23 resolved as shift
-WARNING: shift/reduce conflict for IF in state 23 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 23 resolved as shift
-WARNING: shift/reduce conflict for AND in state 24 resolved as shift
-WARNING: shift/reduce conflict for OR in state 24 resolved as shift
-WARNING: shift/reduce conflict for AND in state 25 resolved as shift
-WARNING: shift/reduce conflict for OR in state 25 resolved as shift
-WARNING: shift/reduce conflict for RFLOWER in state 32 resolved as shift
-WARNING: shift/reduce conflict for ID in state 32 resolved as shift
-WARNING: shift/reduce conflict for IF in state 32 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 32 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 36 resolved as shift
-WARNING: reduce/reduce conflict in state 5 resolved using rule (if_statement -> ELSE statements)
-WARNING: rejected rule (empty -> <empty>) in state 5
+WARNING: shift/reduce conflict for ID in state 6 resolved as shift
+WARNING: shift/reduce conflict for IF in state 6 resolved as shift
+WARNING: shift/reduce conflict for ID in state 13 resolved as shift
+WARNING: shift/reduce conflict for IF in state 13 resolved as shift
+WARNING: shift/reduce conflict for AND in state 19 resolved as shift
+WARNING: shift/reduce conflict for OR in state 19 resolved as shift
+WARNING: shift/reduce conflict for AND in state 20 resolved as shift
+WARNING: shift/reduce conflict for OR in state 20 resolved as shift
+WARNING: shift/reduce conflict for RFLOWER in state 27 resolved as shift
+WARNING: shift/reduce conflict for ID in state 27 resolved as shift
+WARNING: shift/reduce conflict for IF in state 27 resolved as shift
