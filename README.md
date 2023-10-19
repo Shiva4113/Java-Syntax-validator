@@ -12,9 +12,9 @@
 ### Constructs worked on:
 
 
-1) Simple Variable Declaration --> will improve on this in the future for initialization as well
-2) Conditional construct --> if, if-else, nested-if, if ladder
-3) Looping construct --> while, for, do...while
+1) Simple Variable Declaration --> will improve on this in the future for initialization as well.
+2) Conditional construct --> if-else, nested-if to  be added
+3) Looping construct --> for, do...while to be added
 4) Function declaration
 5) Function definition
 
