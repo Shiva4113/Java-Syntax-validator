@@ -4,12 +4,12 @@ Grammar
 
 Rule 0     S' -> funcDeclaration
 Rule 1     funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON
-Rule 2     accessModifier -> PUBLIC
-Rule 3     accessModifier -> PROTECTED
-Rule 4     accessModifier -> PRIVATE
-Rule 5     accessModifier -> <empty>
-Rule 6     statickw -> STATIC
-Rule 7     statickw -> <empty>
+Rule 2     funcDeclaration -> accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON
+Rule 3     accessModifier -> PUBLIC
+Rule 4     accessModifier -> PROTECTED
+Rule 5     accessModifier -> PRIVATE
+Rule 6     accessModifier -> <empty>
+Rule 7     statickw -> STATIC
 Rule 8     funcname -> ID
 Rule 9     params -> DTYPE ID COMMA params
 Rule 10    params -> DTYPE ID
@@ -18,23 +18,23 @@ Rule 11    params -> <empty>
 Terminals, with rules where they appear
 
 COMMA                : 9
-DTYPE                : 1 9 10
+DTYPE                : 1 2 9 10
 ID                   : 8 9 10
-LBRACE               : 1
-PRIVATE              : 4
-PROTECTED            : 3
-PUBLIC               : 2
-RBRACE               : 1
-SEMICOLON            : 1
-STATIC               : 6
+LBRACE               : 1 2
+PRIVATE              : 5
+PROTECTED            : 4
+PUBLIC               : 3
+RBRACE               : 1 2
+SEMICOLON            : 1 2
+STATIC               : 7
 error                : 
 
 Nonterminals, with rules where they appear
 
-accessModifier       : 1
+accessModifier       : 1 2
 funcDeclaration      : 0
-funcname             : 1
-params               : 1 9
+funcname             : 1 2
+params               : 1 2 9
 statickw             : 1
 
 Parsing method: LALR
@@ -43,16 +43,17 @@ state 0
 
     (0) S' -> . funcDeclaration
     (1) funcDeclaration -> . accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON
-    (2) accessModifier -> . PUBLIC
-    (3) accessModifier -> . PROTECTED
-    (4) accessModifier -> . PRIVATE
-    (5) accessModifier -> .
+    (2) funcDeclaration -> . accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON
+    (3) accessModifier -> . PUBLIC
+    (4) accessModifier -> . PROTECTED
+    (5) accessModifier -> . PRIVATE
+    (6) accessModifier -> .
 
     PUBLIC          shift and go to state 3
     PROTECTED       shift and go to state 4
     PRIVATE         shift and go to state 5
-    STATIC          reduce using rule 5 (accessModifier -> .)
-    DTYPE           reduce using rule 5 (accessModifier -> .)
+    DTYPE           reduce using rule 6 (accessModifier -> .)
+    STATIC          reduce using rule 6 (accessModifier -> .)
 
     funcDeclaration                shift and go to state 1
     accessModifier                 shift and go to state 2
@@ -66,138 +67,187 @@ state 1
 state 2
 
     (1) funcDeclaration -> accessModifier . statickw DTYPE funcname LBRACE params RBRACE SEMICOLON
-    (6) statickw -> . STATIC
-    (7) statickw -> .
+    (2) funcDeclaration -> accessModifier . DTYPE funcname LBRACE params RBRACE SEMICOLON
+    (7) statickw -> . STATIC
 
-    STATIC          shift and go to state 7
-    DTYPE           reduce using rule 7 (statickw -> .)
+    DTYPE           shift and go to state 7
+    STATIC          shift and go to state 8
 
     statickw                       shift and go to state 6
 
 state 3
 
-    (2) accessModifier -> PUBLIC .
+    (3) accessModifier -> PUBLIC .
 
-    STATIC          reduce using rule 2 (accessModifier -> PUBLIC .)
-    DTYPE           reduce using rule 2 (accessModifier -> PUBLIC .)
+    DTYPE           reduce using rule 3 (accessModifier -> PUBLIC .)
+    STATIC          reduce using rule 3 (accessModifier -> PUBLIC .)
 
 
 state 4
 
-    (3) accessModifier -> PROTECTED .
+    (4) accessModifier -> PROTECTED .
 
-    STATIC          reduce using rule 3 (accessModifier -> PROTECTED .)
-    DTYPE           reduce using rule 3 (accessModifier -> PROTECTED .)
+    DTYPE           reduce using rule 4 (accessModifier -> PROTECTED .)
+    STATIC          reduce using rule 4 (accessModifier -> PROTECTED .)
 
 
 state 5
 
-    (4) accessModifier -> PRIVATE .
+    (5) accessModifier -> PRIVATE .
 
-    STATIC          reduce using rule 4 (accessModifier -> PRIVATE .)
-    DTYPE           reduce using rule 4 (accessModifier -> PRIVATE .)
+    DTYPE           reduce using rule 5 (accessModifier -> PRIVATE .)
+    STATIC          reduce using rule 5 (accessModifier -> PRIVATE .)
 
 
 state 6
 
     (1) funcDeclaration -> accessModifier statickw . DTYPE funcname LBRACE params RBRACE SEMICOLON
 
-    DTYPE           shift and go to state 8
+    DTYPE           shift and go to state 9
 
 
 state 7
 
-    (6) statickw -> STATIC .
+    (2) funcDeclaration -> accessModifier DTYPE . funcname LBRACE params RBRACE SEMICOLON
+    (8) funcname -> . ID
 
-    DTYPE           reduce using rule 6 (statickw -> STATIC .)
+    ID              shift and go to state 11
 
+    funcname                       shift and go to state 10
 
 state 8
+
+    (7) statickw -> STATIC .
+
+    DTYPE           reduce using rule 7 (statickw -> STATIC .)
+
+
+state 9
 
     (1) funcDeclaration -> accessModifier statickw DTYPE . funcname LBRACE params RBRACE SEMICOLON
     (8) funcname -> . ID
 
-    ID              shift and go to state 10
+    ID              shift and go to state 11
 
-    funcname                       shift and go to state 9
-
-state 9
-
-    (1) funcDeclaration -> accessModifier statickw DTYPE funcname . LBRACE params RBRACE SEMICOLON
-
-    LBRACE          shift and go to state 11
-
+    funcname                       shift and go to state 12
 
 state 10
+
+    (2) funcDeclaration -> accessModifier DTYPE funcname . LBRACE params RBRACE SEMICOLON
+
+    LBRACE          shift and go to state 13
+
+
+state 11
 
     (8) funcname -> ID .
 
     LBRACE          reduce using rule 8 (funcname -> ID .)
 
 
-state 11
+state 12
+
+    (1) funcDeclaration -> accessModifier statickw DTYPE funcname . LBRACE params RBRACE SEMICOLON
+
+    LBRACE          shift and go to state 14
+
+
+state 13
+
+    (2) funcDeclaration -> accessModifier DTYPE funcname LBRACE . params RBRACE SEMICOLON
+    (9) params -> . DTYPE ID COMMA params
+    (10) params -> . DTYPE ID
+    (11) params -> .
+
+    DTYPE           shift and go to state 15
+    RBRACE          reduce using rule 11 (params -> .)
+
+    params                         shift and go to state 16
+
+state 14
 
     (1) funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE . params RBRACE SEMICOLON
     (9) params -> . DTYPE ID COMMA params
     (10) params -> . DTYPE ID
     (11) params -> .
 
-    DTYPE           shift and go to state 12
+    DTYPE           shift and go to state 15
     RBRACE          reduce using rule 11 (params -> .)
 
-    params                         shift and go to state 13
+    params                         shift and go to state 17
 
-state 12
+state 15
 
     (9) params -> DTYPE . ID COMMA params
     (10) params -> DTYPE . ID
 
-    ID              shift and go to state 14
+    ID              shift and go to state 18
 
 
-state 13
+state 16
+
+    (2) funcDeclaration -> accessModifier DTYPE funcname LBRACE params . RBRACE SEMICOLON
+
+    RBRACE          shift and go to state 19
+
+
+state 17
 
     (1) funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE params . RBRACE SEMICOLON
 
-    RBRACE          shift and go to state 15
+    RBRACE          shift and go to state 20
 
 
-state 14
+state 18
 
     (9) params -> DTYPE ID . COMMA params
     (10) params -> DTYPE ID .
 
-    COMMA           shift and go to state 16
+    COMMA           shift and go to state 21
     RBRACE          reduce using rule 10 (params -> DTYPE ID .)
 
 
-state 15
+state 19
+
+    (2) funcDeclaration -> accessModifier DTYPE funcname LBRACE params RBRACE . SEMICOLON
+
+    SEMICOLON       shift and go to state 22
+
+
+state 20
 
     (1) funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE params RBRACE . SEMICOLON
 
-    SEMICOLON       shift and go to state 17
+    SEMICOLON       shift and go to state 23
 
 
-state 16
+state 21
 
     (9) params -> DTYPE ID COMMA . params
     (9) params -> . DTYPE ID COMMA params
     (10) params -> . DTYPE ID
     (11) params -> .
 
-    DTYPE           shift and go to state 12
+    DTYPE           shift and go to state 15
     RBRACE          reduce using rule 11 (params -> .)
 
-    params                         shift and go to state 18
+    params                         shift and go to state 24
 
-state 17
+state 22
+
+    (2) funcDeclaration -> accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON .
+
+    $end            reduce using rule 2 (funcDeclaration -> accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON .)
+
+
+state 23
 
     (1) funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON .
 
     $end            reduce using rule 1 (funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON .)
 
 
-state 18
+state 24
 
     (9) params -> DTYPE ID COMMA params .
 

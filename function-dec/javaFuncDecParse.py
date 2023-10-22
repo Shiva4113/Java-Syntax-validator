@@ -5,9 +5,10 @@ flag = 0
 
 def p_funcDeclaration(p):
     '''
-    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON     
+    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON
+                    | accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON 
     '''
-    p[0] = ('declaration',p[1],p[2])
+    p[0] = ('declaration',p[1],p[2],p[3],p[4],p[6])
     
 def p_accessModifier(p):
     '''
@@ -24,19 +25,16 @@ def p_accessModifier(p):
 def p_statickw(p):
     '''
     statickw : STATIC
-             |
     '''
     if len(p)==2:
         p[0] = (p[1],)
-    else:
-        p[0] = ('notstatic',)
         
 def p_funcname(p):
     '''
     funcname : ID
     '''
     
-    p[0] = (p[1],)
+    p[0] = ('Function name',p[1])
     
 def p_params(p):
     '''
@@ -46,11 +44,11 @@ def p_params(p):
     '''
     
     if len(p) == 3:
-        p[0] = (p[1] , p[2])
+        p[0] = ('parameters',(p[1] , p[2]))
     elif len(p) == 1:
-        p[0] = tuple()
+        p[0] = ('parameters : None',)
     else:
-        p[0] = [(p[1],p[2])] + [p[4]]
+        p[0] = 'parameters',[(p[1],p[2])] + [p[4]]
         
 def p_error(p):
     print("Syntax error")

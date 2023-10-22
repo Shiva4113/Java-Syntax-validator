@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA DTYPE ID LBRACE PRIVATE PROTECTED PUBLIC RBRACE SEMICOLON STATIC\n    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON     \n    \n    accessModifier : PUBLIC\n                   | PROTECTED\n                   | PRIVATE\n                   | \n    \n    statickw : STATIC\n             |\n    \n    funcname : ID\n    \n    params : DTYPE ID COMMA params\n           | DTYPE ID \n           |\n    '
+_lr_signature = 'COMMA DTYPE ID LBRACE PRIVATE PROTECTED PUBLIC RBRACE SEMICOLON STATIC\n    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON\n                    | accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON \n    \n    accessModifier : PUBLIC\n                   | PROTECTED\n                   | PRIVATE\n                   | \n    \n    statickw : STATIC\n    \n    funcname : ID\n    \n    params : DTYPE ID COMMA params\n           | DTYPE ID \n           |\n    '
     
-_lr_action_items = {'PUBLIC':([0,],[3,]),'PROTECTED':([0,],[4,]),'PRIVATE':([0,],[5,]),'STATIC':([0,2,3,4,5,],[-5,7,-2,-3,-4,]),'DTYPE':([0,2,3,4,5,6,7,11,16,],[-5,-7,-2,-3,-4,8,-6,12,12,]),'$end':([1,17,],[0,-1,]),'ID':([8,12,],[10,14,]),'LBRACE':([9,10,],[11,-8,]),'RBRACE':([11,13,14,16,18,],[-11,15,-10,-11,-9,]),'COMMA':([14,],[16,]),'SEMICOLON':([15,],[17,]),}
+_lr_action_items = {'PUBLIC':([0,],[3,]),'PROTECTED':([0,],[4,]),'PRIVATE':([0,],[5,]),'DTYPE':([0,2,3,4,5,6,8,13,14,21,],[-6,7,-3,-4,-5,9,-7,15,15,15,]),'STATIC':([0,2,3,4,5,],[-6,8,-3,-4,-5,]),'$end':([1,22,23,],[0,-2,-1,]),'ID':([7,9,15,],[11,11,18,]),'LBRACE':([10,11,12,],[13,-8,14,]),'RBRACE':([13,14,16,17,18,21,24,],[-11,-11,19,20,-10,-11,-9,]),'COMMA':([18,],[21,]),'SEMICOLON':([19,20,],[22,23,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'funcDeclaration':([0,],[1,]),'accessModifier':([0,],[2,]),'statickw':([2,],[6,]),'funcname':([8,],[9,]),'params':([11,16,],[13,18,]),}
+_lr_goto_items = {'funcDeclaration':([0,],[1,]),'accessModifier':([0,],[2,]),'statickw':([2,],[6,]),'funcname':([7,9,],[10,12,]),'params':([13,14,21,],[16,17,24,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,12 +28,12 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> funcDeclaration","S'",1,None,None,None),
   ('funcDeclaration -> accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON','funcDeclaration',8,'p_funcDeclaration','javaFuncDecParse.py',8),
-  ('accessModifier -> PUBLIC','accessModifier',1,'p_accessModifier','javaFuncDecParse.py',14),
-  ('accessModifier -> PROTECTED','accessModifier',1,'p_accessModifier','javaFuncDecParse.py',15),
-  ('accessModifier -> PRIVATE','accessModifier',1,'p_accessModifier','javaFuncDecParse.py',16),
-  ('accessModifier -> <empty>','accessModifier',0,'p_accessModifier','javaFuncDecParse.py',17),
-  ('statickw -> STATIC','statickw',1,'p_statickw','javaFuncDecParse.py',26),
-  ('statickw -> <empty>','statickw',0,'p_statickw','javaFuncDecParse.py',27),
+  ('funcDeclaration -> accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON','funcDeclaration',7,'p_funcDeclaration','javaFuncDecParse.py',9),
+  ('accessModifier -> PUBLIC','accessModifier',1,'p_accessModifier','javaFuncDecParse.py',15),
+  ('accessModifier -> PROTECTED','accessModifier',1,'p_accessModifier','javaFuncDecParse.py',16),
+  ('accessModifier -> PRIVATE','accessModifier',1,'p_accessModifier','javaFuncDecParse.py',17),
+  ('accessModifier -> <empty>','accessModifier',0,'p_accessModifier','javaFuncDecParse.py',18),
+  ('statickw -> STATIC','statickw',1,'p_statickw','javaFuncDecParse.py',27),
   ('funcname -> ID','funcname',1,'p_funcname','javaFuncDecParse.py',36),
   ('params -> DTYPE ID COMMA params','params',4,'p_params','javaFuncDecParse.py',43),
   ('params -> DTYPE ID','params',2,'p_params','javaFuncDecParse.py',44),

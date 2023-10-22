@@ -4,6 +4,22 @@ import ply.lex as lex
 # <public>(optional) <static>(optional) <datatype> <funcname> <(params)> <semicolon>
 tokens = ('DTYPE','ID','LBRACE','RBRACE','COMMA','SEMICOLON','STATIC','PUBLIC','PROTECTED','PRIVATE')
 
+def t_PUBLIC(t):
+    r'public'
+    return t
+
+def t_PROTECTED(t):
+    r'protected'
+    return t
+
+def t_PRIVATE(t):
+    r'private'
+    return t
+
+def t_STATIC(t):
+    r'static'
+    return t
+
 def t_DTYPE(t): 
     r'\b(int|char|double|String|boolean|float|long|short)\b'
     return t
@@ -21,22 +37,6 @@ def t_COMMA(t):
 
 def t_SEMICOLON(t):
     r';'
-    return t
-
-def t_STATIC(t):
-    r'static'
-    return t
-
-def t_PUBLIC(t):
-    r'public'
-    return t
-
-def t_PROTECTED(t):
-    r'protected'
-    return t
-
-def t_PRIVATE(t):
-    r'private'
     return t
 
 t_ignore = ' \t' #to ignore all the spaces and tabs in the regex
