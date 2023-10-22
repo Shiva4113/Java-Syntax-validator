@@ -32,7 +32,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-data = '''while(a>b){}'''
+data = input()
 
 lexer.input(data)
 
