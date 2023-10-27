@@ -20,7 +20,7 @@ def t_ID(t):
     return t
 
 def t_COMMA(t):
-    r','
+    r',' 
     return t
 
 def t_EQUALS(t):

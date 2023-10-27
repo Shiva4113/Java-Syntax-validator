@@ -1,8 +1,24 @@
 import ply.lex as lex
 
 #define TOKENS
-# <public>(optional) <static>(optional) <datatype> <funcname> <(params)> <semicolon>
-tokens = ('DTYPE','ID','LBRACE','RBRACE','COMMA','SEMICOLON','STATIC','PUBLIC','PROTECTED','PRIVATE','LCURL','RCURL','RETURN')
+# <public>(optional) <static>(optional) <datatype> <funcname> <(params)> <semicolon>{<code> return t}
+tokens = ('DTYPE','ID','LBRACE','RBRACE','COMMA','SEMICOLON','STATIC','PUBLIC','PROTECTED','PRIVATE','LFLOWER','RETURN','RFLOWER')
+
+def t_PUBLIC(t):
+    r'public'
+    return t
+
+def t_PROTECTED(t):
+    r'protected'
+    return t
+
+def t_PRIVATE(t):
+    r'private'
+    return t
+
+def t_STATIC(t):
+    r'static'
+    return t
 
 def t_DTYPE(t): 
     r'\b(int|char|double|String|boolean|float|long|short)\b'
@@ -23,32 +39,16 @@ def t_SEMICOLON(t):
     r';'
     return t
 
-def t_STATIC(t):
-    r'static'
-    return t
-
-def t_PUBLIC(t):
-    r'public'
-    return t
-
-def t_PROTECTED(t):
-    r'protected'
-    return t
-
-def t_PRIVATE(t):
-    r'private'
-    return t
-
-def t_LCURL(t):
+def t_LFLOWER(t):
     r'{'
-    return t
-
-def t_RCURL(t):
-    r'}'
     return t
 
 def t_RETURN(t):
     r'return'
+    return t
+
+def t_RFLOWER(t):
+    r'}'
     return t
 
 
