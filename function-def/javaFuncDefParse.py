@@ -1,17 +1,15 @@
 import ply.yacc as yacc
-from javaFuncDecLex import tokens
+from javaFuncDefLex import tokens
 
 flag = 0
 
 def p_funcDeclaration(p):
     '''
-    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE SEMICOLON
-                    | accessModifier DTYPE funcname LBRACE params RBRACE SEMICOLON 
+    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE LFLOWER statements RETURN RFLOWER
+                    | accessModifier DTYPE funcname LBRACE params RBRACE LFLOWER statements RETURN RFLOWER
     '''
-    if len(p)==9:
-        p[0] = ('declaration',p[1],p[2],p[3],p[4],p[6])
-    else:
-        p[0] = ('declaration',p[1],p[2],p[3],p[5])
+    p[0] = ('declaration',p[1],p[2],p[3],p[4],p[6])
+    
 def p_accessModifier(p):
     '''
     accessModifier : PUBLIC
@@ -51,7 +49,38 @@ def p_params(p):
         p[0] = ('parameters : None',)
     else:
         p[0] = 'parameters',[(p[1],p[2])] + [p[4]]
-        
+
+def p_statements(p):
+    '''
+    statements  : statements statement
+                | statement
+    '''
+    if len(p) == 2:
+        p[0] = (p[1],)
+    else:
+        p[0] = p[1]+(p[2],)
+
+def p_statement(p):
+    '''
+    statement   : list SEMICOLON
+                | 
+    '''
+    if len(p) == 3:
+        p[0] = (p[1],)
+    else:
+        p[0] = p[1]
+
+def p_list(p):
+    '''
+    list    : ID list
+            | ID
+    '''
+
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = [p[1]]+p[2]
+
 def p_error(p):
     print("Syntax error")
     global flag 
