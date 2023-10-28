@@ -1,7 +1,18 @@
 import ply.lex as lex
 
-#defining tokens  --> while(condition){statements}
-tokens = ('WHILE','LBRACE','LESSER','GREATER','NOT','AND','OR','EQUALS','RBRACE','LFLOWER','RFLOWER','SEMICOLON','ID')
+tokens = ('WHILE',
+        'LBRACE',
+        'LESSER',
+        'GREATER',
+        'NOT',
+        'AND',
+        'OR',
+        'EQUALS',
+        'RBRACE',
+        'LFLOWER',
+        'RFLOWER',
+        'SEMICOLON',
+        'ID')
 
 def t_WHILE(t):
     r'while'

@@ -8,7 +8,6 @@ def p_while(p):
     while_statement     : WHILE LBRACE conditions RBRACE LFLOWER statements RFLOWER
                         | WHILE LBRACE conditions RBRACE singleStatement 
     '''
-
     if len(p) == 6:
         p[0] = (p[1],p[3],p[5])
     else:

@@ -1,22 +1,22 @@
-#LEXER
+
 
 import ply.lex as lex
-#all tokens
-tokens = ('DTYPE','ID','COMMA','EQUALS','NUMBER','CHAR',"STRING",'SEMICOLON')
 
-#Regex for different expressions
-# t_DTYPE = r'\b(int|char|double|String|boolean)'
-# t_EQUALS = r'='
-# t_SEMICOLON = r';'
+tokens = ('DTYPE',
+        'ID',
+        'COMMA',
+        'EQUALS',
+        'NUMBER',
+        'CHAR',
+        "STRING",
+        'SEMICOLON')
 
-#rule for identifiers
-#keep everything in order ==> Data type -> ID -> Equals -> Number -> Semicolon
 def t_DTYPE(t): 
     r'\b(int|char|double|String|boolean|float|long|short)\b'
     return t
 
 def t_ID(t):
-    r'\b[a-zA-z_][a-zA-Z0-9_]*\b' #this string will take any _ , uppercase, lowercase and digit 
+    r'\b[a-zA-z_][a-zA-Z0-9_]*\b' 
     return t
 
 def t_COMMA(t):
@@ -29,7 +29,6 @@ def t_EQUALS(t):
 
 def t_NUMBER(t):
     r'\d+'
-    # t.value = int(t.value)
     return t
 
 def t_CHAR(t):
@@ -46,7 +45,7 @@ def t_STRING(t):
 def t_SEMICOLON(t):
     r';'
     return t
-t_ignore = ' \t' #to ignore all the spaces and tabs in the regex
+t_ignore = ' \t'
 
 def t_error(t):
     print(f"Illegal character encountered {t.value[0]}")

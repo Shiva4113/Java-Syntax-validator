@@ -1,6 +1,5 @@
 import ply.yacc as yacc
-#importing tokens
-# from javaVarDecLex import data
+
 from javaVarDecLex import tokens
 
 flag = 0

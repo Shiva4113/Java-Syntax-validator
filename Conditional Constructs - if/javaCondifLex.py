@@ -1,6 +1,19 @@
 import ply.lex as lex
 
-tokens = ('IF','ELSE','LBRACE','LESSER','GREATER','EQUALS','NOT','AND','OR','RBRACE','LFLOWER','SEMICOLON','RFLOWER','ID')
+tokens = ('IF',
+          'ELSE',
+          'LBRACE',
+          'LESSER',
+          'GREATER',
+          'EQUALS',
+          'NOT',
+          'AND',
+          'OR',
+          'RBRACE',
+          'LFLOWER',
+          'SEMICOLON',
+          'RFLOWER',
+          'ID')
 
 def t_IF(t):
     r'if'

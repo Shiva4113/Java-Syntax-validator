@@ -1,8 +1,20 @@
 import ply.lex as lex
 
 #define TOKENS
-# <public>(optional) <static>(optional) <datatype> <funcname> <(params)> <semicolon>
-tokens = ('DTYPE','ID','LBRACE','RBRACE','COMMA','SEMICOLON','STATIC','PUBLIC','PROTECTED','PRIVATE')
+# <public>(optional) <static>(optional) <datatype> <funcname> <(params)> <semicolon>{<code> return t}
+tokens = ('DTYPE',
+          'ID',
+          'LBRACE',
+          'RBRACE',
+          'COMMA',
+          'SEMICOLON',
+          'STATIC',
+          'PUBLIC',
+          'PROTECTED',
+          'PRIVATE',
+          'LFLOWER',
+          'RETURN',
+          'RFLOWER')
 
 def t_PUBLIC(t):
     r'public'
@@ -25,7 +37,7 @@ def t_DTYPE(t):
     return t
 
 def t_ID(t):
-    r'\b[a-zA-z_][a-zA-Z0-9_]*\b' #this string will take any _ , uppercase, lowercase and digit 
+    r'\b[a-zA-z_][a-zA-Z0-9_]*\b' 
     return t
 
 t_LBRACE = r'\('
@@ -39,7 +51,20 @@ def t_SEMICOLON(t):
     r';'
     return t
 
-t_ignore = ' \t' #to ignore all the spaces and tabs in the regex
+def t_LFLOWER(t):
+    r'{'
+    return t
+
+def t_RETURN(t):
+    r'return'
+    return t
+
+def t_RFLOWER(t):
+    r'}'
+    return t
+
+
+t_ignore = ' \t'
 
 def t_error(t):
     print(f"Illegal character encountered {t.value[0]}")

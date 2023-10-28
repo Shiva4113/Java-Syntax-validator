@@ -1,6 +1,13 @@
 # Java syntax validator using PLY tools (python)
 
+<hr>
+
+## A Syntax validator made for the language Java using python PLY (Python lex/yacc) tools.
+
+<hr>
+
 ### Requirements:
+
   python lex/yacc tools - PLY
 
   ```bash
@@ -11,10 +18,9 @@
 
 ### Constructs worked on:
 
-
-1) Simple Variable Declaration --> will improve on this in the future for initialization as well.
-2) Conditional construct --> if-else, nested-if to  be added
-3) Looping construct --> for, do...while to be added
+1) Simple Variable Declaration 
+2) Conditional construct --> nested if
+3) Looping construct --> while
 4) Function declaration
 5) Function definition
 
