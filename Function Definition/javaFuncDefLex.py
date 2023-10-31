@@ -64,7 +64,7 @@ def t_RFLOWER(t):
     return t
 
 
-t_ignore = ' \t'
+t_ignore = ' \t\n'
 
 def t_error(t):
     print(f"Illegal character encountered {t.value[0]}")

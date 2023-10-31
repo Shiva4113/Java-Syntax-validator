@@ -5,10 +5,13 @@ flag = 0
 
 def p_funcDeclaration(p):
     '''
-    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE LFLOWER statements RETURN RFLOWER
-                    | accessModifier DTYPE funcname LBRACE params RBRACE LFLOWER statements RETURN RFLOWER
+    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE LFLOWER statements RFLOWER 
+                    | accessModifier DTYPE funcname LBRACE params RBRACE LFLOWER statements RFLOWER
     '''
-    p[0] = ('declaration',p[1],p[2],p[3],p[4],p[6])
+    if len(p) == 11:
+        p[0] = ('declaration',p[1],p[2],p[3],p[4],p[6],p[9])
+    else:
+        p[0] = ('declaration',p[1],p[2],p[3],p[5],p[8])
     
 def p_accessModifier(p):
     '''

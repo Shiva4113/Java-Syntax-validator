@@ -28,11 +28,11 @@ def t_STATIC(t):
     return t
 
 def t_DTYPE(t): 
-    r'\b(int|char|double|String|boolean|float|long|short)\b'
+    r'\b(int|char|double|void|String|boolean|float|long|short|void)\b'
     return t
 
 def t_ID(t):
-    r'\b[a-zA-z_][a-zA-Z0-9_]*\b' 
+    r'\b[a-zA-Z_][a-zA-Z0-9_]*\b' 
     return t
 
 t_LBRACE = r'\('
