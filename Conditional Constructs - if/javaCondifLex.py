@@ -29,7 +29,7 @@ t_LFLOWER = r'\{'
 t_RFLOWER = r'\}'
 
 def t_ID(t):
-    r'\w+'
+    r'\b([a-zA-Z_][a-zA-Z_0-9]*)\b |\b(\d+)\b'
     return t
 
 t_LESSER = r'<'

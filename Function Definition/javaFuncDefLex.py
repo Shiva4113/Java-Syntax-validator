@@ -13,7 +13,6 @@ tokens = ('DTYPE',
           'PROTECTED',
           'PRIVATE',
           'LFLOWER',
-          'RETURN',
           'RFLOWER')
 
 def t_PUBLIC(t):
@@ -33,7 +32,7 @@ def t_STATIC(t):
     return t
 
 def t_DTYPE(t): 
-    r'\b(int|char|double|String|boolean|float|long|short)\b'
+    r'\b(int|void|char|double|String|boolean|float|long|short)\b'
     return t
 
 def t_ID(t):

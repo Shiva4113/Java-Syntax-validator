@@ -21,7 +21,7 @@
 1) Simple Variable Declaration 
 2) Conditional construct --> nested if
 3) Looping construct --> while
-4) Function declaration
+4) Looping construct --> do..while
 5) Function definition
 
 <hr>

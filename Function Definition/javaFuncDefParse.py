@@ -3,9 +3,9 @@ from javaFuncDefLex import tokens
 
 flag = 0
 
-def p_funcDeclaration(p):
+def p_funcDefinition(p):
     '''
-    funcDeclaration : accessModifier statickw DTYPE funcname LBRACE params RBRACE LFLOWER statements RFLOWER 
+    funcDefinition  : accessModifier statickw DTYPE funcname LBRACE params RBRACE LFLOWER statements RFLOWER 
                     | accessModifier DTYPE funcname LBRACE params RBRACE LFLOWER statements RFLOWER
     '''
     if len(p) == 11:
@@ -57,16 +57,18 @@ def p_statements(p):
     '''
     statements  : statements statement
                 | statement
+                |
     '''
     if len(p) == 2:
         p[0] = (p[1],)
-    else:
+    elif len(p) == 3:
         p[0] = p[1]+(p[2],)
+    else:
+        p[0] = ()
 
 def p_statement(p):
     '''
-    statement   : list SEMICOLON
-                | 
+    statement   : list SEMICOLON 
     '''
     if len(p) == 3:
         p[0] = (p[1],)
@@ -77,6 +79,7 @@ def p_list(p):
     '''
     list    : ID list
             | ID
+            
     '''
 
     if len(p) == 2:

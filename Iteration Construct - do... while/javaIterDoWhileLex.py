@@ -1,6 +1,11 @@
 import ply.lex as lex
 
-tokens = ('WHILE',
+#do{statemnets}while();
+tokens = (
+        'DO',
+        'LFLOWER',
+        'RFLOWER',
+        'WHILE',
         'LBRACE',
         'LESSER',
         'GREATER',
@@ -9,10 +14,13 @@ tokens = ('WHILE',
         'OR',
         'EQUALS',
         'RBRACE',
-        'LFLOWER',
-        'RFLOWER',
         'SEMICOLON',
-        'ID')
+        'ID',
+)
+
+def t_DO(t):
+    r'do'
+    return t
 
 def t_WHILE(t):
     r'while'
@@ -40,6 +48,7 @@ t_ignore = ' \t'
 def t_error(t):
     print(f"Illegal character found {t.value[0]}")
     t.lexer.skip(1)
+
 
 lexer = lex.lex()
 
